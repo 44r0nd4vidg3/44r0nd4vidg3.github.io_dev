@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Sign In — Aaron Davidge</title>
+<meta name="description" content="Sign in to aarondavidge.com — coming soon. This module is under construction." />
+<meta name="theme-color" content="#04070e" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Aaron Davidge" />
+<meta property="og:url" content="https://aarondavidge.com/signin.html" />
+<meta property="og:title" content="Sign In — Aaron Davidge" />
+<meta property="og:description" content="Sign in to aarondavidge.com — coming soon." />
+<meta property="og:image" content="https://aarondavidge.com/card_image.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1600" />
+<meta property="og:image:height" content="1127" />
+<meta property="og:image:alt" content="Preview of aarondavidge.com — Aaron Davidge, AI engineer and security researcher" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@44r0nd4vidg3" />
+<meta name="twitter:image" content="https://aarondavidge.com/card_image.jpg" />
+<meta name="robots" content="noindex" />
+<link rel="canonical" href="https://aarondavidge.com/signin.html" />
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="favicon-16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="44R0N" />
+<meta name="application-name" content="44R0N" />
+<link rel="stylesheet" href="assets/css/site.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Orbitron:wght@700;900&display=swap" rel="stylesheet" />
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y1MDZZWH85"></script>
+</head>
+<body class="text-slate-300 antialiased">
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2108918419982043&ev=PageView&noscript=1" /></noscript>
+
+<div class="fixed inset-0 bg-grid pointer-events-none"></div>
+<div class="fixed inset-0 vignette pointer-events-none"></div>
+
+<!-- ============ NAVBAR ============ -->
+<header class="fixed top-0 inset-x-0 z-50 bg-[#04070e]/80 backdrop-blur-md border-b border-[#12233f]">
+  <nav class="max-w-[1880px] mx-auto flex items-center justify-between px-6 lg:px-10 h-16">
+    <a href="index.html" class="logo flex items-center gap-3 text-white font-bold text-[20px]">
+      <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5 3 11.25l3.75 3.75m10.5-7.5L21 11.25l-3.75 3.75M14.25 4.5l-4.5 15"/></svg>
+      44R0ND4VIDG3
+    </a>
+    <ul class="hidden xl:flex items-center gap-8 text-[13px] tracking-[0.2em] text-slate-300">
+      <li><a href="index.html" class="hover:text-blue-400 transition-colors">HOME</a></li>
+      <li><a href="index.html#about" class="hover:text-blue-400 transition-colors">ABOUT</a></li>
+      <li><a href="index.html#projects" class="hover:text-blue-400 transition-colors">PROJECTS</a></li>
+      <li><a href="index.html#skills" class="hover:text-blue-400 transition-colors">SKILLS</a></li>
+      <li><a href="content.html" class="hover:text-blue-400 transition-colors">CONTENT</a></li>
+      <li><a href="blog/" class="hover:text-blue-400 transition-colors">BLOG</a></li>
+      <li><a href="https://store.aarondavidge.com" class="hover:text-blue-400 transition-colors">STORE</a></li>
+      <li><a href="contact.html" class="hover:text-blue-400 transition-colors">CONTACT</a></li>
+    </ul>
+    <div class="flex items-center gap-4">
+      <a href="index.html" class="glow-btn hidden sm:flex items-center gap-2 border border-blue-500/70 rounded-md px-5 py-2 text-[12px] tracking-[0.2em] text-blue-100 hover:text-white transition-all">RETURN HOME</a>
+      <button id="menu-btn" type="button" aria-label="Toggle menu" class="xl:hidden icon-neon text-blue-300 hover:text-white transition-colors cursor-pointer">
+        <svg id="menu-icon-open" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+        <svg id="menu-icon-close" class="w-7 h-7 hidden" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+  </nav>
+  <!-- mobile menu -->
+  <div id="mobile-menu" class="hidden xl:hidden border-t border-[#12233f] bg-[#04070e]/95 backdrop-blur-md">
+    <ul class="flex flex-col px-6 py-4 gap-4 text-[13px] tracking-[0.2em] text-slate-300">
+      <li><a href="index.html" class="block py-1 hover:text-blue-400 transition-colors">HOME</a></li>
+      <li><a href="index.html#about" class="block py-1 hover:text-blue-400 transition-colors">ABOUT</a></li>
+      <li><a href="index.html#projects" class="block py-1 hover:text-blue-400 transition-colors">PROJECTS</a></li>
+      <li><a href="index.html#skills" class="block py-1 hover:text-blue-400 transition-colors">SKILLS</a></li>
+      <li><a href="content.html" class="block py-1 hover:text-blue-400 transition-colors">CONTENT</a></li>
+      <li><a href="blog/" class="block py-1 hover:text-blue-400 transition-colors">BLOG</a></li>
+      <li><a href="https://store.aarondavidge.com" class="block py-1 hover:text-blue-400 transition-colors">STORE</a></li>
+      <li><a href="contact.html" class="block py-1 hover:text-blue-400 transition-colors">CONTACT</a></li>
+      <li><a href="signin.html" class="block py-1 text-blue-400">SIGN IN</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- mobile social bar (vertical rail replacement) -->
+<div class="socialbar lg:hidden fixed bottom-0 inset-x-0 z-40 bg-[#04070e]/85 backdrop-blur-md border-t border-[#12233f] flex items-center justify-around py-3">
+  <a href="https://github.com/44r0nd4vidg3" target="_blank" rel="noopener" aria-label="GitHub" class="icon-neon text-blue-300 hover:text-white transition-colors">
+    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.27-.01-1.17-.02-2.12-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.34.96.1-.75.4-1.25.72-1.54-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.43-2.7 5.4-5.27 5.69.41.35.78 1.05.78 2.12 0 1.53-.01 2.76-.01 3.14 0 .31.21.68.8.56A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
+  </a>
+  <a href="https://www.linkedin.com/in/aarondavidge/" target="_blank" rel="noopener" aria-label="LinkedIn" class="icon-neon text-blue-300 hover:text-white transition-colors">
+    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.55V9h3.57v11.45Z"/></svg>
+  </a>
+  <a href="mailto:aaron@aarondavidge.com" aria-label="Email" class="icon-neon text-blue-300 hover:text-white transition-colors">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.24a2.25 2.25 0 0 1-1.07 1.92l-7.5 4.62a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.92v-.24"/></svg>
+  </a>
+  <a href="tel:+15044703770" aria-label="Phone" class="icon-neon text-blue-300 hover:text-white transition-colors">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"/></svg>
+  </a>
+  <a href="https://www.instagram.com/aarondavidge.ai" target="_blank" rel="noopener" aria-label="Instagram" class="icon-neon text-blue-300 hover:text-white transition-colors">
+    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.72 3.72 0 0 1-1.38-.9 3.72 3.72 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63a5.88 5.88 0 0 0-2.13 1.38A5.88 5.88 0 0 0 .63 4.14C.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.8.72 1.48 1.38 2.13a5.88 5.88 0 0 0 2.13 1.38c.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.88 5.88 0 0 0 2.13-1.38 5.88 5.88 0 0 0 1.38-2.13c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.88 5.88 0 0 0-1.38-2.13A5.88 5.88 0 0 0 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0Zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84Zm0 10.16A4 4 0 1 1 16 12a4 4 0 0 1-4 4Zm7.85-10.4a1.44 1.44 0 1 1-1.44-1.44 1.44 1.44 0 0 1 1.44 1.44Z"/></svg>
+  </a>
+  <a href="https://x.com/44r0nd4vidg3" target="_blank" rel="noopener" aria-label="X" class="icon-neon text-blue-300 hover:text-white transition-colors">
+    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644Z"/></svg>
+  </a>
+</div>
+
+<!-- ============ LEFT RAIL ============ -->
+<aside class="hidden lg:flex fixed left-6 top-0 bottom-0 z-40 flex-col items-center justify-between py-28 pointer-events-none">
+  <div class="flex flex-col items-center gap-6">
+    <span class="vertical-label text-[10px] text-slate-500 tracking-[0.5em]">AI ENGINEER</span>
+    <span class="w-px h-16 bg-gradient-to-b from-blue-500/60 to-transparent"></span>
+  </div>
+  <div class="flex flex-col items-center gap-5 pointer-events-auto">
+    <a href="https://github.com/44r0nd4vidg3" target="_blank" rel="noopener" aria-label="GitHub" class="icon-neon text-blue-300 hover:text-white transition-colors">
+      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.27-.01-1.17-.02-2.12-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.34.96.1-.75.4-1.25.72-1.54-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.43-2.7 5.4-5.27 5.69.41.35.78 1.05.78 2.12 0 1.53-.01 2.76-.01 3.14 0 .31.21.68.8.56A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
+    </a>
+    <a href="https://www.linkedin.com/in/aarondavidge/" target="_blank" rel="noopener" aria-label="LinkedIn" class="icon-neon text-blue-300 hover:text-white transition-colors">
+      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.55V9h3.57v11.45Z"/></svg>
+    </a>
+    <a href="mailto:aaron@aarondavidge.com" aria-label="Email" class="icon-neon text-blue-300 hover:text-white transition-colors">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.24a2.25 2.25 0 0 1-1.07 1.92l-7.5 4.62a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.92v-.24"/></svg>
+    </a>
+    <a href="tel:+15044703770" aria-label="Phone" class="icon-neon text-blue-300 hover:text-white transition-colors">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"/></svg>
+    </a>
+    <a href="https://www.instagram.com/aarondavidge.ai" target="_blank" rel="noopener" aria-label="Instagram" class="icon-neon text-blue-300 hover:text-white transition-colors">
+      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.72 3.72 0 0 1-1.38-.9 3.72 3.72 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63a5.88 5.88 0 0 0-2.13 1.38A5.88 5.88 0 0 0 .63 4.14C.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.8.72 1.48 1.38 2.13a5.88 5.88 0 0 0 2.13 1.38c.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.88 5.88 0 0 0 2.13-1.38 5.88 5.88 0 0 0 1.38-2.13c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.88 5.88 0 0 0-1.38-2.13A5.88 5.88 0 0 0 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0Zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84Zm0 10.16A4 4 0 1 1 16 12a4 4 0 0 1-4 4Zm7.85-10.4a1.44 1.44 0 1 1-1.44-1.44 1.44 1.44 0 0 1 1.44 1.44Z"/></svg>
+    </a>
+    <a href="https://x.com/44r0nd4vidg3" target="_blank" rel="noopener" aria-label="X" class="icon-neon text-blue-300 hover:text-white transition-colors">
+      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644Z"/></svg>
+    </a>
+  </div>
+  <div class="flex flex-col items-center gap-2">
+    <span class="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_8px_#3b82f6]"></span>
+    <span class="vertical-label text-[10px] text-slate-500">SCROLL</span>
+    <svg class="w-4 h-4 text-blue-400 bob" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg>
+    <svg class="w-4 h-4 text-blue-500/60 bob2 -mt-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg>
+  </div>
+</aside>
+
+<!-- ============ COMING SOON ============ -->
+<main class="relative z-10 max-w-[1880px] mx-auto px-6 md:px-10 lg:px-20 pt-32 pb-24 min-h-screen flex items-center justify-center">
+  <div class="term-section corner border border-blue-500/30 rounded-sm max-w-[640px] w-full panel-pad">
+    <div class="term-head">
+        <div class="term-dots"><i></i><i></i><i></i></div>
+        <p class="term-cmd font-mono"><b>$</b> auth --login</p>
+      </div>
+
+    <p class="neon-strong text-center text-blue-300 text-[14px] tracking-[0.35em] mb-3">// SIGN IN</p>
+    <h1 class="text-center font-display text-white text-[20px] lg:text-[20px] tracking-[0.2em] font-bold mb-8">UNDER CONSTRUCTION<span class="cursor-blink inline-block w-3 h-6 bg-blue-400 shadow-[0_0_8px_#3b82f6] ml-2 align-middle"></span></h1>
+
+    <div class="font-mono text-[13px] leading-7 mb-8">
+      <p class="text-green-400">$ auth --login</p>
+      <p class="text-amber-400">&gt; ERROR 501: AUTH MODULE NOT YET DEPLOYED</p>
+      <p class="text-slate-400">&gt; This is on my bench right now — accounts, and everything</p>
+      <p class="text-slate-400">&nbsp;&nbsp;that comes with them, are being built.</p>
+      <p class="text-slate-400">&gt; STATUS: <span class="text-blue-300">IN DEVELOPMENT</span></p>
+      <p class="text-slate-400">&gt; ETA: <span class="text-blue-300">SOON&trade;</span></p>
+    </div>
+
+    <div class="build-bar mb-3"></div>
+    <p class="text-[10px] tracking-[0.25em] text-slate-600 text-center mb-8">COMPILING AUTH MODULE...</p>
+
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
+      <a href="index.html" class="glow-btn inline-flex items-center justify-center gap-2 border border-blue-500/70 rounded-md px-6 py-3 text-[12px] tracking-[0.2em] text-blue-100 hover:text-white transition-all">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/></svg>
+        RETURN HOME
+      </a>
+      <a href="contact.html" class="text-[12px] tracking-[0.2em] text-slate-300 hover:text-blue-400 transition-colors border-b border-transparent hover:border-blue-400 pb-1">GET NOTIFIED — CONTACT ME</a>
+    </div>
+  </div>
+</main>
+<script src="assets/js/analytics.js" defer></script>
+<script src="assets/js/site.js" defer></script>
+</body>
+</html>

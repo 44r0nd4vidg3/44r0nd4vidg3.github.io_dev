@@ -1,0 +1,803 @@
+/* ============================================================================
+   aarondavidge.com — stylesheet source of truth
+   ----------------------------------------------------------------------------
+   This is the ONLY file you edit. It compiles to assets/css/site.css:
+
+       npm install          (once)
+       npm run build:css    (or: npm run watch:css while developing)
+
+   Every page links exactly one stylesheet — assets/css/site.css — so a change
+   here lands on all 11 pages at once. Do not add <style> blocks to pages.
+   ============================================================================ */
+
+@import "tailwindcss";
+
+/* Files Tailwind scans for utility classes. The JS files matter: site.js and
+   home.js add utility classes at runtime (nav underline, EQ bars, GitHub
+   tiles), and without these lines those classes get tree-shaken away. */
+@source "../../*.html";
+@source "../../blog/**/*.html";
+@source "../../assets/js/*.js";
+
+/* ---------------------------------------------------------------------------
+   THEME
+   Fonts are loaded from Google Fonts in each page's <head>.
+   --------------------------------------------------------------------------- */
+@theme {
+  --font-mono: "JetBrains Mono", monospace;
+  --font-display: "Orbitron", "JetBrains Mono", monospace;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DESIGN TOKENS — the whole system lives here
+   ───────────────────────────────────────────────────────────────────────────
+   Nothing below this block may use a raw hex, rgba, px size or duration.
+   If you need a new value, add a token; don't inline one. That rule is what
+   keeps the UI from drifting apart again.
+   ═══════════════════════════════════════════════════════════════════════════ */
+:root {
+  /* ---- surface & ink ---------------------------------------------------- */
+  --bg:            #04070e;   /* page */
+  --surface:       #060d1b;   /* raised panel */
+  --surface-2:     #0b1426;   /* inset / tile */
+  --surface-sunk:  #050a13;   /* media wells, video frame */
+
+  --line:          #12233f;   /* default hairline */
+  --line-strong:   rgb(59 130 246 / .30);
+  --line-accent:   rgb(59 130 246 / .70);
+  --line-bracket:  rgb(96 165 250 / .80);  /* corner brackets */
+
+  --ink:           #ffffff;
+  --ink-1:         #e2e8f0;
+  --ink-2:         #cbd5e1;
+  --ink-3:         #94a3b8;   /* body copy */
+  --ink-4:         #64748b;   /* labels */
+  --ink-5:         #475569;   /* faintest */
+
+  /* channel triplets — every glow/alpha below derives from these, so changing
+     the brand hue here re-tints the entire UI */
+  --c-accent:      59 130 246;
+  --c-accent-br:   96 165 250;
+  --c-accent-soft: 147 197 253;
+  --c-bg:          4 7 14;
+
+  --accent:        #3b82f6;
+  --accent-bright: #60a5fa;
+  --accent-soft:   #93c5fd;
+  --accent-pale:   #dbeafe;
+  --accent-wash:   rgb(59 130 246 / .10);
+  --ok:            #34d399;
+
+  /* GitHub contribution heat ramp (also referenced by assets/js/home.js) */
+  --gh-0:          #0b1426;
+  --gh-1:          #153264;
+  --gh-2:          #1d4ed8;
+  --gh-3:          #3b82f6;
+  --gh-4:          #7dd3fc;
+  --warn:          #fbbf24;
+
+  /* ---- type scale (8 steps) --------------------------------------------
+     Everything between 9px and 20px in the old markup collapses onto these. */
+  --text-2xs:      10px;   /* micro labels, timestamps */
+  --text-xs:       11px;   /* meta rows */
+  --text-sm:       12px;   /* buttons, chips */
+  --text-md:       13px;   /* UI default */
+  --text-lg:       14px;   /* body copy */
+  --text-xl:       20px;   /* sub-headings */
+  --text-title:    clamp(22px, 5vw, 34px);      /* section headings */
+  --text-display:  clamp(58px, 9vw, 110px);     /* hero + watermark */
+
+  --tracking-tight: .1em;
+  --tracking:       .15em;
+  --tracking-wide:  .2em;
+  --tracking-wider: .25em;
+  --tracking-widest:.35em;
+
+  --leading-tight:  1.2;
+  --leading:        1.7;
+
+  /* ---- spacing (4px rhythm) --------------------------------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+
+  /* ---- radii (3 steps, no more) ----------------------------------------- */
+  --radius-panel:  2px;    /* big terminal surfaces — sharp, technical */
+  --radius-ctl:    6px;    /* buttons, inputs, chips, tiles */
+  --radius-pill:   9999px;
+
+  /* ---- borders ---------------------------------------------------------- */
+  --border:        1px solid var(--line);
+  --border-strong: 1px solid var(--line-strong);
+  --border-accent: 1px solid var(--line-accent);
+
+  /* ---- elevation -------------------------------------------------------- */
+  --shadow-panel:  0 0 40px rgb(59 130 246 / .18), inset 0 0 80px rgb(3 8 16 / .85);
+  --shadow-card:   0 0 26px rgb(59 130 246 / .28);
+  --shadow-ctl:    0 0 18px rgb(59 130 246 / .40);
+  --glow-sm:       0 0 8px var(--accent);
+
+  /* ---- motion ----------------------------------------------------------- */
+  --dur-fast:      120ms;   /* press feedback */
+  --dur:           220ms;   /* hover, colour */
+  --dur-slow:      320ms;   /* transforms, panels */
+  --ease:          cubic-bezier(.4, 0, .2, 1);
+  --pulse:         3.2s;    /* ambient neon breathing */
+
+  /* ---- focus ring — one definition, every control -----------------------
+     An outline, not a box-shadow: components define their own hover shadows
+     (.arrow, .glow-btn, .card-panel), and a box-shadow ring loses the cascade
+     to any of them. Outlines sit in a separate property and can't be
+     clobbered. They also follow border-radius and ignore overflow clipping. */
+  --ring-w:        2px;
+  --ring-offset:   2px;
+  --ring-color:    var(--accent-bright);
+
+  /* ---- app chrome ------------------------------------------------------- */
+  --nav-h:         64px;
+  --safe-b:        env(safe-area-inset-bottom, 0px);
+  --safe-t:        env(safe-area-inset-top, 0px);
+  --safe-l:        env(safe-area-inset-left, 0px);
+  --safe-r:        env(safe-area-inset-right, 0px);
+}
+
+/* ---------------------------------------------------------------------------
+   BASE
+   --------------------------------------------------------------------------- */
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  font-family: "JetBrains Mono", monospace;
+  overflow-x: hidden;
+}
+
+::selection { background: rgb(var(--c-accent) / .4); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   APP SHELL — the behaviours that make this read as an application
+   rather than a document. Applies to every page automatically.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+html {
+  -webkit-text-size-adjust: 100%;          /* iOS must not reflow type on rotate */
+  -webkit-tap-highlight-color: transparent;/* kill the grey flash on tap */
+  overscroll-behavior-y: none;             /* no rubber-band past the app edges */
+}
+
+body {
+  min-height: 100svh;                      /* survives mobile URL-bar collapse */
+  padding-left: var(--safe-l);
+  padding-right: var(--safe-r);
+}
+
+/* Chrome is chrome: it should not select like prose. Content still selects. */
+header, aside, nav, .term-head, .feedbtn, .arrow, .a4-chip {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Every control responds to a tap within one frame and cancels the
+   double-tap-to-zoom delay. */
+a, button, [role="tab"], input, textarea, select, summary {
+  touch-action: manipulation;
+}
+
+/* ---- focus: one ring, every control, keyboard only ---------------------
+   Mouse and touch never show it; Tab always does. */
+:focus { outline: none; }
+:focus-visible {
+  outline: var(--ring-w) solid var(--ring-color);
+  outline-offset: var(--ring-offset);
+  border-radius: var(--radius-ctl);
+  position: relative;
+  z-index: 1;
+}
+.term-section:focus-visible,
+.card-panel:focus-visible,
+.slide:focus-visible { border-radius: var(--radius-panel); }
+
+/* Inputs sit inside a bordered row; ring the row, not the bare field. */
+.a4-input:focus-visible { outline: none; }
+.a4-inputrow:focus-within {
+  outline: var(--ring-w) solid var(--ring-color);
+  outline-offset: var(--ring-offset);
+}
+
+/* ---- pressed state: the single most "native" cue ----------------------- */
+a:active, button:active, [role="tab"]:active {
+  transform: scale(.97);
+  transition-duration: var(--dur-fast);
+}
+/* things that shouldn't shrink when pressed */
+.logo:active, header a:active, #mobile-menu a:active, aside a:active { transform: none; }
+#mobile-menu a:active { background: var(--accent-wash); }
+.card-panel:active { transform: translateY(-2px); transition-duration: var(--dur-fast); }
+
+/* ---- hit targets: 44px minimum on touch pointers -----------------------
+   WCAG 2.5.8 exempts links inline in a sentence, and forcing those to 44px
+   would wreck the prose — so they opt out explicitly. Everything you'd
+   actually aim a thumb at meets the target. */
+@media (pointer: coarse) {
+  a, button, [role="tab"], input, textarea, select { min-height: 44px; }
+
+  /* inline prose links keep their natural size */
+  p a, li a, dd a, span a, .cardbody a, .prose a { min-height: 0; display: inline; }
+
+  /* Any control whose whole content is an icon gets a square target.
+     The [aria-label] test matters: :only-child ignores text nodes, so
+     `a:has(> svg:only-child)` alone would also match the logo and the
+     DOWNLOAD CV button (svg + bare text) and squash them to 44px. An
+     icon-only control needs an aria-label anyway, so this is exact. */
+  a[aria-label]:has(> svg:only-child),
+  button[aria-label]:has(> svg:only-child),
+  .a4-speak {
+    min-width: 44px;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+
+  #mobile-menu a { min-height: 48px; display: flex; align-items: center; }
+  header button, aside a, .socialbar a {
+    min-width: 44px;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+
+  /* small text actions inside card footers need width as well as height */
+  .cardfoot a {
+    min-height: 44px; min-width: 44px;
+    padding-inline: var(--space-2);
+    display: inline-flex; align-items: center; justify-content: flex-end;
+  }
+
+  /* the chat field: shrink the row's own padding so the input itself can be
+     44px tall without the row ballooning */
+  .a4-inputrow { padding-block: 0; min-height: 48px; }
+  .a4-input { min-height: 44px; }
+}
+
+/* ---- safe areas: never let the notch or home indicator clip the UI ----- */
+header { padding-top: var(--safe-t); }
+
+.socialbar {
+  padding-bottom: calc(var(--space-3) + var(--safe-b));
+}
+/* pages with the fixed bottom bar need matching bottom clearance */
+@media (max-width: 1023px) {
+  main { padding-bottom: calc(var(--space-10) * 2 + var(--safe-b)); }
+}
+
+/* ---- momentum scrolling inside horizontal rails ------------------------ */
+.track, .gh-scroll, .a4-log {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+/* ---- one scrollbar treatment everywhere -------------------------------- */
+* { scrollbar-width: thin; scrollbar-color: rgb(var(--c-accent) / .4) transparent; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--c-accent) / .35);
+  border-radius: var(--radius-pill);
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover { background: rgb(var(--c-accent) / .6); background-clip: content-box; }
+
+/* ---- standalone (installed) mode --------------------------------------- */
+@media (display-mode: standalone) {
+  /* no browser chrome to scroll against — lock the shell and let panels scroll */
+  html, body { overscroll-behavior: none; }
+  /* the back-to-site affordances are noise once installed */
+  .browser-only { display: none; }
+}
+
+/* ---------------------------------------------------------------------------
+   BACKDROPS
+   --------------------------------------------------------------------------- */
+.bg-grid {
+  background-image:
+    linear-gradient(rgb(var(--c-accent) / .05) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--c-accent) / .05) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 20%, black 40%, transparent 100%);
+}
+
+.vignette {
+  background: radial-gradient(ellipse 120% 90% at 50% 0%, transparent 70%, rgb(var(--c-bg) / .55) 100%);
+}
+
+/* Full-bleed fixed hero photo (home + contact). */
+.hero-bg { position: fixed; inset: 0; pointer-events: none; }
+.hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: 55% 18%; }
+.hero-bg::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(90deg, rgb(var(--c-bg) / .6) 0%, rgb(var(--c-bg) / .35) 28%, rgb(var(--c-bg) / .05) 52%, rgb(var(--c-bg) / .05) 72%, rgb(var(--c-bg) / .3) 100%),
+    linear-gradient(180deg, rgb(var(--c-bg) / .4) 0%, rgb(var(--c-bg) / .05) 22%, rgb(var(--c-bg) / .12) 65%, rgb(var(--c-bg) / .6) 100%);
+}
+
+/* ---------------------------------------------------------------------------
+   TYPE TREATMENTS
+   --------------------------------------------------------------------------- */
+.text-chrome {
+  background: linear-gradient(180deg, var(--ink) 0%, #e6edf7 35%, #8fa3c0 60%, #f2f6fc 78%, #6b7f9e 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 3px 10px rgb(0 0 0 / .7));
+}
+
+.text-blue-chrome {
+  background: linear-gradient(180deg, #5b9bff 0%, #2e7bff 40%, #1250c4 65%, #3d86f5 85%, #0d3d99 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 0 22px rgb(var(--c-accent) / .45)) drop-shadow(0 3px 8px rgb(0 0 0 / .8));
+}
+
+/* 404 headline */
+.text-glitch {
+  background: linear-gradient(180deg, #5b9bff 0%, #2e7bff 45%, #1250c4 70%, #3d86f5 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 0 22px rgb(var(--c-accent) / .55));
+  font-family: "Orbitron", monospace;
+}
+
+.watermark {
+  -webkit-text-stroke: 2px rgb(120 180 255 / .9);
+  color: transparent;
+  font-family: "Orbitron", monospace;
+  user-select: none;
+  filter:
+    drop-shadow(0 0 6px rgb(var(--c-accent) / .9))
+    drop-shadow(0 0 20px rgb(var(--c-accent) / .6))
+    drop-shadow(0 0 50px rgb(var(--c-accent) / .35));
+  animation: neon-pulse var(--pulse) ease-in-out infinite;
+}
+
+.vertical-label { writing-mode: vertical-rl; transform: rotate(180deg); letter-spacing: .5em; }
+
+/* ---------------------------------------------------------------------------
+   NEON / GLOW
+   --------------------------------------------------------------------------- */
+.neon-text { animation: neon-pulse var(--pulse) ease-in-out infinite; }
+.neon-strong { animation: neon-pulse-strong var(--pulse) ease-in-out infinite; }
+.icon-neon { animation: icon-pulse var(--pulse) ease-in-out infinite; }
+.glow-border { animation: border-pulse var(--pulse) ease-in-out infinite; }
+.glow-btn { animation: btn-pulse var(--pulse) ease-in-out infinite; }
+.glow-btn:hover {
+  animation: none;
+  box-shadow: 0 0 32px rgb(var(--c-accent-br) / .85), inset 0 0 20px rgb(var(--c-accent) / .3);
+}
+
+@keyframes neon-pulse {
+  0%, 100% { filter: drop-shadow(0 0 6px rgb(var(--c-accent) / .9)) drop-shadow(0 0 20px rgb(var(--c-accent) / .6)) drop-shadow(0 0 50px rgb(var(--c-accent) / .35)); }
+  50%      { filter: drop-shadow(0 0 10px rgb(var(--c-accent-br) / 1)) drop-shadow(0 0 32px rgb(var(--c-accent) / .85)) drop-shadow(0 0 70px rgb(var(--c-accent) / .5)); }
+}
+
+@keyframes neon-pulse-strong {
+  0%, 100% { filter: drop-shadow(0 0 4px rgb(var(--c-accent-br) / 1)) drop-shadow(0 0 12px rgb(var(--c-accent) / .95)) drop-shadow(0 0 28px rgb(var(--c-accent) / .7)); }
+  50%      { filter: drop-shadow(0 0 7px rgb(var(--c-accent-soft) / 1)) drop-shadow(0 0 20px rgb(var(--c-accent-br) / 1)) drop-shadow(0 0 44px rgb(var(--c-accent) / .85)); }
+}
+
+@keyframes icon-pulse {
+  0%, 100% { filter: drop-shadow(0 0 3px rgb(var(--c-accent) / .8)) drop-shadow(0 0 8px rgb(var(--c-accent) / .4)); }
+  50%      { filter: drop-shadow(0 0 5px rgb(var(--c-accent-br) / 1)) drop-shadow(0 0 14px rgb(var(--c-accent) / .6)); }
+}
+
+@keyframes border-pulse {
+  0%, 100% { box-shadow: 0 0 12px rgb(var(--c-accent) / .35), inset 0 0 12px rgb(var(--c-accent) / .12); }
+  50%      { box-shadow: 0 0 20px rgb(var(--c-accent-br) / .6), inset 0 0 16px rgb(var(--c-accent) / .2); }
+}
+
+@keyframes btn-pulse {
+  0%, 100% { box-shadow: 0 0 14px rgb(var(--c-accent) / .4), inset 0 0 12px rgb(var(--c-accent) / .14); }
+  50%      { box-shadow: 0 0 26px rgb(var(--c-accent-br) / .7), inset 0 0 18px rgb(var(--c-accent) / .24); }
+}
+
+/* ---------------------------------------------------------------------------
+   SURFACES
+   --------------------------------------------------------------------------- */
+.card-panel {
+  background: linear-gradient(160deg, rgb(10 18 34 / .85), rgb(5 10 20 / .9));
+  border: var(--border-strong);
+  backdrop-filter: blur(6px);
+  transition: all var(--dur-slow) var(--ease);
+}
+.card-panel:hover {
+  border-color: rgb(var(--c-accent-br) / .7);
+  box-shadow: 0 0 26px rgb(var(--c-accent) / .28);
+  transform: translateY(-4px);
+}
+
+.term-section {
+  background:
+    repeating-linear-gradient(0deg, rgb(var(--c-accent-br) / .03) 0 1px, transparent 1px 4px),
+    linear-gradient(165deg, rgb(4 9 18 / .94), rgb(2 5 11 / .96));
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-panel);
+}
+
+.terminal-glow {
+  box-shadow: 0 0 30px rgb(var(--c-accent) / .15), inset 0 0 30px rgb(4 10 20 / .9);
+}
+
+/* Bracket corners on panels. */
+.corner { position: relative; }
+.corner::before,
+.corner::after { content: ""; position: absolute; width: 14px; height: 14px; border-color: rgb(var(--c-accent-br) / .8); }
+.corner::before { top: -1px; left: -1px; border-top: 2px solid; border-left: 2px solid; border-top-color: inherit; }
+.corner::after { bottom: -1px; right: -1px; border-bottom: 2px solid; border-right: 2px solid; }
+
+/* ---------------------------------------------------------------------------
+   MOTION
+   --------------------------------------------------------------------------- */
+.cursor-blink { animation: blink 1s steps(1) infinite; }
+@keyframes blink { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
+
+.bob  { animation: bob 1.6s ease-in-out infinite; }
+.bob2 { animation: bob 1.6s ease-in-out .25s infinite; }
+@keyframes bob { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(6px) } }
+
+/* Audio-style equaliser bars (home, contact, assistant). */
+.eq-bar { transform-origin: bottom; animation: eq 1s ease-in-out infinite; }
+@keyframes eq { 0%, 100% { transform: scaleY(.3) } 50% { transform: scaleY(1) } }
+
+/* Sweeping scanline over the hero. */
+.scan {
+  position: absolute; left: 0; right: 0; height: 110px; pointer-events: none;
+  background: linear-gradient(180deg, transparent 0%, rgb(var(--c-accent-br) / .14) 46%, rgb(var(--c-accent-soft) / .32) 50%, rgb(var(--c-accent-br) / .14) 54%, transparent 100%);
+  box-shadow: 0 0 30px rgb(var(--c-accent) / .2);
+  animation: scanline 7s linear infinite;
+}
+@keyframes scanline { 0% { top: -10% } 100% { top: 110% } }
+
+/* Indeterminate "under construction" progress bar (signin, assistant). */
+.build-bar { position: relative; overflow: hidden; height: 6px; background: rgb(11 24 48 / .9); border-radius: var(--radius-ctl); }
+.build-bar::after {
+  content: ""; position: absolute; top: 0; bottom: 0; width: 35%;
+  background: linear-gradient(90deg, transparent, var(--accent), var(--accent-soft), var(--accent), transparent);
+  border-radius: var(--radius-ctl); box-shadow: 0 0 12px rgb(var(--c-accent) / .8);
+  animation: build-sweep 2.2s ease-in-out infinite;
+}
+@keyframes build-sweep { 0% { left: -35% } 100% { left: 100% } }
+
+/* Debugger stepping through the source card, line by line (home). */
+.debug-scan {
+  position: absolute; left: 0; right: 0; top: 20px; height: 1.7em;
+  background: linear-gradient(90deg, rgb(var(--c-accent) / .16), rgb(var(--c-accent) / .05) 70%, transparent);
+  border-left: 2px solid rgb(var(--c-accent-br) / .85);
+  pointer-events: none;
+  animation: debug-step 12s steps(14, end) infinite;
+}
+@keyframes debug-step { 0% { transform: translateY(0) } 100% { transform: translateY(23.8em) } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+  .scan { display: none; }
+}
+
+/* ---------------------------------------------------------------------------
+   FORMS (contact)
+   --------------------------------------------------------------------------- */
+.field {
+  width: 100%;
+  background: rgb(6 13 27 / .8);
+  border: var(--border-strong);
+  border-radius: var(--radius-ctl);
+  padding: var(--space-3) var(--space-4);
+  color: var(--ink-1);
+  font-family: "JetBrains Mono", monospace;
+  font-size: var(--text-md);
+  outline: none;
+  transition: all var(--dur-slow) var(--ease);
+}
+.field:focus { border-color: rgb(var(--c-accent-br) / .9); box-shadow: 0 0 14px rgb(var(--c-accent) / .35); }
+.field::placeholder { color: var(--ink-5); letter-spacing: var(--tracking-tight); }
+
+/* ---------------------------------------------------------------------------
+   BLOG LISTING
+   --------------------------------------------------------------------------- */
+.post-list > * + * { margin-top: 1.5rem; }
+.post-card:hover { border-color: rgb(var(--c-accent) / .6); }
+.post-card:hover .post-title { color: var(--accent-soft); }
+
+/* ---------------------------------------------------------------------------
+   GITHUB CONTRIBUTION TILES (home)
+   --------------------------------------------------------------------------- */
+.gh-cell { background: var(--gh-0); box-shadow: inset 0 0 0 1px rgb(var(--c-accent) / .08); border-radius: var(--radius-panel); }
+.gh-l1 { background: var(--gh-1); }
+.gh-l2 { background: var(--gh-2); }
+.gh-l3 { background: var(--gh-3); box-shadow: 0 0 4px rgb(var(--c-accent) / .55); }
+.gh-l4 { background: var(--gh-4); box-shadow: 0 0 6px rgb(125 211 252 / .75); }
+
+#gh-grid {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(7, auto);
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 2px;
+  width: 100%;
+}
+#gh-grid .gh-cell { aspect-ratio: 1 / 1; width: 100%; }
+
+.gh-scroll { overflow-x: auto; scrollbar-width: none; }
+.gh-scroll::-webkit-scrollbar { display: none; }
+.gh-legend { gap: 4px; }
+.gh-legend .gh-cell { width: 9px; height: 9px; display: inline-block; }
+
+/* ---------------------------------------------------------------------------
+   A4RON.AI CHAT PANEL
+   Base sizing = the compact panel embedded on the home page.
+   The dedicated /assistant.html page opts into the roomier variant with the
+   -full modifier classes.
+   --------------------------------------------------------------------------- */
+.a4-log {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 1rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: var(--text-sm);
+  line-height: 1.65;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--c-accent) / .4) transparent;
+}
+.a4-log:empty { display: none; }
+.a4-log > div { margin-bottom: 6px; white-space: pre-wrap; word-break: break-word; }
+.a4-log .u { color: var(--accent-soft); }
+.a4-log .a { color: var(--ink-3); }
+.a4-log .sys { color: var(--warn); }
+
+/* Full-page variant */
+.a4-log-full { max-height: 46vh; margin-top: .5rem; font-size: var(--text-md); }
+.a4-log-full > div { margin-bottom: 8px; }
+.a4-log-full .a { color: var(--ink-2); }
+
+.a4-chips { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: 12px; }
+.a4-chip {
+  font-family: "JetBrains Mono", monospace;
+  font-size: var(--text-2xs);
+  letter-spacing: var(--tracking);
+  color: var(--accent-bright);
+  background: rgb(var(--c-accent) / .1);
+  border: var(--border-strong);
+  border-radius: var(--radius-ctl);
+  padding: var(--space-2) var(--space-3);
+  cursor: pointer;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.a4-chip:hover { background: rgb(var(--c-accent) / .22); color: var(--ink); }
+
+.a4-inputrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: 12px;
+  border: var(--border-accent);
+  border-radius: var(--radius-ctl);
+  padding: var(--space-3);
+  background: rgb(6 13 27 / .6);
+}
+.a4-inputrow:focus-within { border-color: rgb(var(--c-accent-br) / .85); box-shadow: 0 0 12px rgb(var(--c-accent) / .25); }
+.a4-inputrow-full { padding: var(--space-3) var(--space-4); }
+
+.a4-prompt { color: var(--ok); font-family: monospace; font-weight: 700; }
+
+.a4-input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  color: var(--ink-1);
+  font-family: "JetBrains Mono", monospace;
+  font-size: var(--text-md);
+  letter-spacing: .04em;
+}
+.a4-input::placeholder { color: var(--ink-5); }
+.a4-inputrow-full .a4-input { font-size: var(--text-lg); }
+
+.a4-speak { color: var(--ink-4); transition: color var(--dur) var(--ease); display: inline-flex; }
+.a4-speak:hover { color: var(--accent-bright); }
+
+/* Note: `.nav-link` carries no styles on purpose — it is the hook that
+   assets/js/site.js uses to move the active-page underline. */
+
+/* ---------------------------------------------------------------------------
+   CONTENT PAGE — Twitch stage + social/store feed carousel
+   Layout lives here rather than in utility soup because these pieces are
+   genuinely page-specific, the same way .gh-* and .post-* are.
+   --------------------------------------------------------------------------- */
+
+/* The two display sizes. Fluid clamps replace what used to be eight stepped
+   breakpoint sizes (58/64/80/86/88/92/96/110px), so the hero and the watermark
+   scale continuously instead of jumping at each breakpoint. */
+.text-display { font-size: var(--text-display); line-height: var(--leading-tight); }
+
+/* Section heading used on interior pages. */
+.page-title {
+  font-family: "Orbitron", monospace;
+  font-size: var(--text-title);
+  letter-spacing: var(--tracking-wide);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* THE padding recipe for every large surface — terminal panels, cards, wells.
+   One class, three steps. Do not add p-6 / p-7 / lg:p-10 to a panel; use this,
+   so a panel on the blog is inset exactly like a panel on the contact page. */
+.panel-pad { padding: var(--space-5); }
+@media (min-width: 768px)  { .panel-pad { padding: var(--space-8); } }
+@media (min-width: 1024px) { .panel-pad { padding: var(--space-10); } }
+
+/* Player + chat side by side, stacking below the lg breakpoint. */
+.stage { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: var(--space-6); align-items: stretch; }
+@media (max-width: 1080px) { .stage { grid-template-columns: minmax(0, 1fr); } }
+
+.frame { position: relative; border: var(--border); background: var(--surface-sunk); aspect-ratio: 16 / 9; }
+.frame iframe,
+.chatwrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.chatwrap { position: relative; flex: 1; min-height: 0; }
+
+/* When .stage stacks (below 1080px) the chat card has no player to match
+   height with, so the absolutely-positioned log would collapse to nothing.
+   On desktop the stage stretches well past this, so it changes nothing there. */
+.chatcard { min-height: 420px; }
+@media (max-width: 640px) { .frame { aspect-ratio: 16 / 10; } }
+
+/* Offline placeholder shown until the Twitch parent domain matches. */
+.standby {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: var(--space-5); padding: var(--space-8); text-align: center;
+  background: repeating-linear-gradient(0deg, rgb(var(--c-accent-br) / .04) 0 1px, transparent 1px 4px);
+}
+
+/* Horizontal snap carousel of feed posts. */
+.track {
+  display: flex; gap: var(--space-6); padding: var(--space-1);
+  overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+}
+.track::-webkit-scrollbar { display: none; }
+
+.slide {
+  flex: 0 0 306px; scroll-snap-align: start;
+  display: flex; flex-direction: column; padding: var(--space-4);
+}
+@media (max-width: 640px) { .slide { flex: 0 0 82%; } .track { gap: var(--space-4); } }
+
+.media {
+  position: relative; aspect-ratio: 1 / 1;
+  border: var(--border);
+  background: repeating-linear-gradient(135deg, rgb(var(--c-accent-br) / .07) 0 8px, rgb(4 9 18 / .9) 8px 16px);
+  display: flex; align-items: flex-end; padding: var(--space-3);
+}
+.media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+.textpost {
+  border: var(--border); background: rgb(4 9 18 / .6);
+  padding: var(--space-5); min-height: 180px;
+  display: flex; flex-direction: column; gap: var(--space-3);
+}
+
+.cardfoot {
+  border-top: 1px solid var(--line); padding-top: 12px;
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: var(--text-2xs); letter-spacing: var(--tracking); color: var(--ink-5);
+}
+
+/* Feed source tabs. */
+.feedbtn {
+  border: var(--border); border-radius: var(--radius-ctl); padding: var(--space-2) var(--space-5);
+  font-family: inherit; font-size: var(--text-xs); letter-spacing: var(--tracking-wide);
+  color: var(--ink-4); background: transparent; cursor: pointer;
+  transition: all var(--dur) var(--ease);
+}
+.feedbtn:hover { color: var(--ink-2); border-color: rgb(var(--c-accent) / .5); }
+.feedbtn[aria-selected="true"] {
+  color: var(--ink); border-color: rgb(var(--c-accent) / .8);
+  background: rgb(var(--c-accent) / .12); box-shadow: 0 0 16px rgb(var(--c-accent) / .3);
+}
+@media (max-width: 640px) { .feedbtn { flex: 1 1 0; text-align: center; padding: var(--space-3) var(--space-2); } }
+
+/* Carousel prev/next. */
+.arrow {
+  width: 40px; height: 40px;
+  border: var(--border-accent); border-radius: var(--radius-ctl);
+  background: rgb(var(--c-accent) / .08); color: var(--accent-soft);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all var(--dur) var(--ease);
+}
+.arrow:hover { color: var(--ink); border-color: rgb(var(--c-accent-br) / .8); box-shadow: 0 0 18px rgb(var(--c-accent) / .4); }
+@media (max-width: 640px) { .arrow { width: 44px; height: 44px; } }
+
+
+/* ---------------------------------------------------------------------------
+   TERMINAL HEADER ROW
+   The traffic lights + "$ command" strip that tops every terminal panel.
+   Was pasted as raw markup 12 times; it is one component now.
+   --------------------------------------------------------------------------- */
+.term-head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+.term-dots { display: flex; gap: var(--space-2); flex-shrink: 0; }
+.term-dots i {
+  width: 12px; height: 12px; border-radius: var(--radius-pill); display: block;
+}
+.term-dots i:nth-child(1) { background: rgb(239 68 68 / .7); }
+.term-dots i:nth-child(2) { background: rgb(234 179 8 / .7); }
+.term-dots i:nth-child(3) { background: rgb(34 197 94 / .7); }
+.term-cmd {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking);
+  color: var(--ink-5);
+  text-align: right;
+  min-width: 0;
+}
+.term-cmd b { color: rgb(74 222 128 / .8); font-weight: 400; }
+
+/* ---------------------------------------------------------------------------
+   APP CHROME hooks used by the shell layer
+   --------------------------------------------------------------------------- */
+.socialbar { padding-top: var(--space-3); }
+
+/* Nav rhythm. The bar turns on at 1280px, where eight items plus the wordmark
+   and two buttons need a tighter gap than they do on a wide desktop. Both
+   values come from the spacing scale. */
+header nav > ul { gap: var(--space-5); }
+@media (min-width: 1440px) { header nav > ul { gap: var(--space-8); } }
+
+/* The wordmark steps down on narrow viewports so it never crowds the menu
+   button. Both steps come from the type scale — no one-off sizes. */
+.logo {
+  font-size: var(--text-md);
+  letter-spacing: var(--tracking-tight);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+@media (min-width: 480px) { .logo { font-size: var(--text-lg); } }
+@media (min-width: 768px) { .logo { font-size: var(--text-xl); letter-spacing: var(--tracking); } }
+
+
+/* ---------------------------------------------------------------------------
+   OVERFLOW GUARDS
+   Nothing may push the page sideways. Content that genuinely cannot wrap
+   (preformatted code, control rails) scrolls or wraps within its own panel
+   instead — the app never scrolls horizontally as a whole.
+   --------------------------------------------------------------------------- */
+
+/* Preformatted code keeps its line breaks but scrolls inside its card. */
+pre {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Panel header rows and control rails wrap before they overflow. */
+.term-head { flex-wrap: wrap; row-gap: var(--space-3); }
+.term-cmd { flex: 1 1 auto; }
+
+/* Flex items default to min-width:auto, which refuses to shrink below their
+   content — the usual cause of a stray horizontal scrollbar. The control rail
+   opts out and wraps. */
+.feed-controls { min-width: 0; flex-wrap: wrap; justify-content: flex-end; }
+
+/* The feed source handle truncates rather than forcing the arrows off-screen. */
+#feed-handle {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Belt and braces: no descendant may widen the document. */
+html, body { max-width: 100%; }

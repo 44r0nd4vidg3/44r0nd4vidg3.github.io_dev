@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /signin.html
+Disallow: /blog.html
+Disallow: /store.html
+
+Sitemap: https://aarondavidge.com/sitemap.xml

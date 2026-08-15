@@ -1,0 +1,16 @@
+{
+  "name": "aarondavidge-com",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Personal site for Aaron Davidge — static, deployed to GitHub Pages at aarondavidge.com.",
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/styles/main.css -o ./assets/css/site.css --minify",
+    "watch:css": "tailwindcss -i ./src/styles/main.css -o ./assets/css/site.css --watch",
+    "serve": "python3 -m http.server 8000",
+    "dev": "npm run watch:css"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.2",
+    "tailwindcss": "^4.3.2"
+  }
+}
